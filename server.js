@@ -8,7 +8,8 @@ const app = express();
 
 // Middlewares
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 // Log de solicitudes en consola (para que los estudiantes vean las peticiones en vivo)
 app.use((req, res, next) => {
@@ -285,7 +286,7 @@ app.delete('/mensajes/:id', async (req, res) => {
   }
 });
 
-// 4. Obtener configuración del muro (GET)
+// 6. Obtener configuración del muro (GET)
 app.get('/config', async (req, res) => {
   try {
     const config = await obtenerConfiguracion();
@@ -296,7 +297,7 @@ app.get('/config', async (req, res) => {
   }
 });
 
-// 5. Guardar configuración del muro (POST)
+// 7. Guardar configuración del muro (POST)
 app.post('/config', async (req, res) => {
   try {
     const { nombreMuro, tema, emoji, descripcion } = req.body;
